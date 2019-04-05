@@ -29,9 +29,17 @@ var infoJSON = `{
    "app_ssh_host_key_fingerprint": "af:82:92:98:0b:80:c4:14:3e:0a:9b:c3:c8:4b:ae:21",
    "app_ssh_oauth_client": "ssh-proxy",
    "doppler_logging_endpoint": "wss://doppler.cf.sap.hana.ondemand.com:443",
-   "api_version": "2.123.0",
-   "osbapi_version": "2.14"
+   "api_version": "2.128.0",
+   "osbapi_version": "2.14",
+   "bits_endpoint": "https://bits.cf.sap.hana.ondemand.com"
 }`
+// var infoJSON = `{
+//    "description": "Cloud Foundry at SAP Cloud Platform",
+//    "authorization_endpoint": "https://login.cf.sap.hana.ondemand.com",
+//    "token_endpoint": "https://uaa.cf.sap.hana.ondemand.com",
+//    "app_ssh_endpoint": "ssh.cf.sap.hana.ondemand.com:2222",
+//    "api_version": "2.128.0"
+// }`
 
 func init() {
 	flag.Parse()
@@ -42,9 +50,8 @@ func init() {
 	logflag.Parse()
 }
 
-func TestDecodeJSON(t *testing.T) {
-	var info *Info
-	err := decodeJSON(infoJSON, info)
+func TestUnmarshalInfo(t *testing.T) {
+	info, err := unmarshalInfo(infoJSON)
 	if assert.NoError(t, err, "Could not parse JSON:", infoJSON) && assert.NotNil(t, info) {
 		log.Infof("Parsed Info: %v\n", info)
 	} else {

@@ -27,12 +27,39 @@ type Client struct {
 
 // Info represents the CF Info at /v2/info
 type Info struct {
-	Description           string `json:"description"`
-	AuthorizationEndpoint string `json:"authorization_endpoint"`
-	TokenEndpoint         string `json:"token_endpoint"`
-	AppSSHEndpoint        string `json:"app_ssh_endpoint"`
-	APIVersion            string `json:"api_version"`
+	Name                        string `json:"name"`
+	Build                       string `json:"build"`
+	Support                     string `json:"support"`
+	Version                     int    `json:"version"`
+	Description                 string `json:"description"`
+	AuthorizationEndpoint       string `json:"authorization_endpoint"`
+	TokenEndpoint               string `json:"token_endpoint"`
+	MinCLIVersion               string `json:"min_cli_version"`
+	MinCLIRecommendedCLIVersion string `json:"min_recommended_cli_version"`
+	AppSSHEndpoint              string `json:"app_ssh_endpoint"`
+	AppSSHHostKeyFingerprint    string `json:"app_ssh_host_key_fingerprint"`
+	AppSSHOAuthClient           string `json:"app_ssh_oauth_client"`
+	DopplerLoggingEndpoint      string `json:"doppler_logging_endpoint"`
+	APIVersion                  string `json:"api_version"`
+	OSBAPIVersion               string `json:"osbapi_version"`
+	BITSEndpoint                string `json:"bits_endpoint"`
 }
+// "name": "",
+// "build": "",
+// "support": "",
+// "version": 0,
+// "description": "Cloud Foundry at SAP Cloud Platform",
+// "authorization_endpoint": "https://login.cf.sap.hana.ondemand.com",
+// "token_endpoint": "https://uaa.cf.sap.hana.ondemand.com",
+// "min_cli_version": null,
+// "min_recommended_cli_version": null,
+// "app_ssh_endpoint": "ssh.cf.sap.hana.ondemand.com:2222",
+// "app_ssh_host_key_fingerprint": "af:82:92:98:0b:80:c4:14:3e:0a:9b:c3:c8:4b:ae:21",
+// "app_ssh_oauth_client": "ssh-proxy",
+// "doppler_logging_endpoint": "wss://doppler.cf.sap.hana.ondemand.com:443",
+// "api_version": "2.128.0",
+// "osbapi_version": "2.14",
+// "bits_endpoint": "https://bits.cf.sap.hana.ondemand.com"
 
 // Target represents output of CF target
 type Target struct {
@@ -46,21 +73,6 @@ type Target struct {
 func (t Target) String() string {
 	return fmt.Sprintf("{APIEndpoint:%s, APIVersion:%s, User:%s, Org: %s, Space: %s}", t.APIEndpoint, t.APIVersion, t.User, t.Org, t.Space)
 }
-
-// NewClient returns an intiaized CF Client that self-intiaizes by leveraging
-// the cf-cli to discover the API endoint and session bearer
-// token and . Requires that some user has already logged via `cf login`
-// func NewClient() (c *Client, err error) {
-// 	c.Target, err = getTarget()
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	c.Info, err = GetInfo()
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	return c, nil
-// }
 
 func GetTarget() (*Target, error) {
 	cmdArgs := []string{"target"}
@@ -78,13 +90,12 @@ func GetInfo() (info *Info, err error) {
 	cmdArgs := []string{"curl", "/v2/info"}
 	cmdOut, err := cmd.Exec("cf", cmdArgs, false)
 	if err != nil {
-		return
+		return nil, err
 	}
-	err = decodeJSON(cmdOut, info)
-	return
+	return unmarshalInfo(cmdOut)
 }
 
-func GetCFAppGUID(appName string) (string, error) {
+func GetAppGUID(appName string) (string, error) {
 	cmdArgs := []string{"app", appName, "--guid"}
 	guid, err := cmd.Exec("cf", cmdArgs, true)
 	if err != nil {
@@ -111,8 +122,17 @@ func getOAuthTokenViaCli() (string, error) {
 	return strings.TrimSpace(token), nil
 }
 
+func unmarshalInfo(json string) (*Info, error) {
+	var info Info
+	err := decodeJSON(json, &info)
+	if err != nil {
+		return nil, err
+	}
+	return &info, nil
+}
+
 func decodeJSON(strJSON string, v interface{}) error {
-	return json.NewDecoder(strings.NewReader(strJSON)).Decode(v)
+	return json.Unmarshal([]byte(strJSON), v)
 }
 
 func parseTargetString(targetString string) (*Target, error) {

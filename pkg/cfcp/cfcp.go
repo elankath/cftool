@@ -2,12 +2,13 @@ package cfcp
 
 import (
 	"fmt"
-	"os"
-	"regexp"
-	"strconv"
-	"strings"
 	"github.com/elankath/cftool/pkg/cfcmd"
 	"github.com/pkg/errors"
+	"golang.org/x/crypto/ssh"
+	"log"
+	"os"
+	"regexp"
+	"strings"
 )
 
 // CopierConfig represents the configuration struct for the Copier and is needed for obtaining a Copier via NewCopier
@@ -33,10 +34,6 @@ func NewCopier(config CopierConfig) (*Copier, error) {
 	c := &Copier{
 		config: &config,
 	}
-	// target, err := cfcmd.GetTarget()
-	// if err != nil {
-	// 	return nil, err
-	// }
 	info, err := cfcmd.GetInfo()
 	if err != nil {
 		return nil, err
@@ -58,29 +55,13 @@ func (c *Copier) Copy(source string, target string, excludes []string) error {
 	case err != nil:
 		return err
 	case fi.IsDir():
-		fmt.Println("TODO: Not yet implemented")
-		// it's a directory
+		log.Fatalf("TODO: Not yet implemented dir copy") // TODO: Implement me
 	default:
 		err = c.copyFile(source, target,  excludes)
 	}
 	if err != nil {
 		return err
 	}
-
-	// if os.isDir(source) {
-	// }
-	//	chCodes, chErrors := getCodeGenerator(done)
-	//os.Walk
-
-	// if err != nil {
-	// 	return err
-	// }
-	// fmt.Printf("**** Got SSH Code: %s\n", sshCode)
-	// if excludes == nil {
-	// 	fmt.Printf("**** Copying paths: %v to dir: %v\n", sources, target)
-	// } else {
-	// 	fmt.Printf("**** Copying paths: %v to dir: %v with excludes (if any): %s", sources, target, excludes)
-	// }
 	return nil
 }
 
@@ -139,7 +120,13 @@ func (c *Copier) copyFile(sourcePath string, targetPath string, excludes []strin
 }
 
 func (c *Copier) doCopy(sourcePath string, targetPath string, passCode string) error {
+	fmt.Printf("Copying %s to %s\n", sourcePath, targetPath)
+	c.numInstances
+	// cf:23162dc7-ca4d-4e77-b656-65cd6d16ba66/0
+	clientConfig := &ssh.ClientConfig {
 
+	}
+	return nil
 }
 
 // func (c *Copier) doCopy(sourcePath string, targetPath string, passCode string) error {
