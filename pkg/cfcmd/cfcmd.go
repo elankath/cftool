@@ -8,7 +8,7 @@ import (
 
 	"net/http"
 
-	"github.com/elankath/cftool/pkg/cmd"
+	"github.com/elankath/cfutil/pkg/cmd"
 	"github.com/pkg/errors"
 )
 
@@ -44,6 +44,7 @@ type Info struct {
 	OSBAPIVersion               string `json:"osbapi_version"`
 	BITSEndpoint                string `json:"bits_endpoint"`
 }
+
 // "name": "",
 // "build": "",
 // "support": "",

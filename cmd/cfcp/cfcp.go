@@ -4,8 +4,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/elankath/cftool/pkg/cfcp"
-	"github.com/jawher/mow.cli"
+	"github.com/elankath/cfutil/pkg/cfcp"
+	cli "github.com/jawher/mow.cli"
 )
 
 func init() {
@@ -37,7 +37,7 @@ Notes:
 	// Specify the action to execute when the app is invoked correctly
 	app.Action = func() {
 		config := cfcp.CopierConfig{
-			AppName: *appName,
+			AppName:   *appName,
 			Simulated: *simulated,
 		}
 		copier, err := cfcp.NewCopier(config)

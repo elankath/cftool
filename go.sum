@@ -1,7 +1,9 @@
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/elankath/cfcp v0.0.0-20180907090353-d38c22a034b5 h1:wXgO30FY3FXtjYWpr3la8OrenkPbfhJa/MMFHbO+MRA=
-github.com/elankath/cftool v0.0.0-20181219110810-097603d0b251 h1:yxDT1o4kN/fxl5i7vd4jTBDGRVy/Xxx8cx8I1gvuw3Q=
+github.com/elankath/cfutil v0.0.0-20191211123234-1451c8c16147 h1:V55wwGtc9+6laF2WiUCHn0rs7ARb3HV8ePL/zIHH6pY=
+github.com/elankath/cfutil v0.0.0-20191211123234-1451c8c16147/go.mod h1:3VXVEycZLcnyxQ5DAUG0SGQME4fHaJNW0LCowv0wb9c=
+github.com/elankath/cfutil v0.0.0-20181219110810-097603d0b251 h1:yxDT1o4kN/fxl5i7vd4jTBDGRVy/Xxx8cx8I1gvuw3Q=
 github.com/elankath/logflag v0.0.0-20181203114107-45077b6530a9 h1:ewBXHzO96B6qsd/exTZigEXl060uOn8909eleLdw/Bw=
 github.com/elankath/logflag v0.0.0-20181203114107-45077b6530a9/go.mod h1:1by+/WxdlV4OtDAA89fHF9jUvmE2tht1TDXNkUe/Pco=
 github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b h1:VKtxabqXZkF25pY9ekfRL6a582T4P37/31XEstQ5p58=
