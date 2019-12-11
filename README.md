@@ -1,2 +1,2 @@
-# cftool
-Cloud Foundry CLI Tools
+# cfutil
+Cloud Foundry CLI Util
