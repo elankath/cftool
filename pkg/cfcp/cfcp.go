@@ -2,13 +2,14 @@ package cfcp
 
 import (
 	"fmt"
-	"github.com/elankath/cftool/pkg/cfcmd"
-	"github.com/pkg/errors"
-	"golang.org/x/crypto/ssh"
 	"log"
 	"os"
 	"regexp"
 	"strings"
+
+	"github.com/elankath/cfutil/pkg/cfcmd"
+	"github.com/pkg/errors"
+	"golang.org/x/crypto/ssh"
 )
 
 // CopierConfig represents the configuration struct for the Copier and is needed for obtaining a Copier via NewCopier
@@ -57,14 +58,13 @@ func (c *Copier) Copy(source string, target string, excludes []string) error {
 	case fi.IsDir():
 		log.Fatalf("TODO: Not yet implemented dir copy") // TODO: Implement me
 	default:
-		err = c.copyFile(source, target,  excludes)
+		err = c.copyFile(source, target, excludes)
 	}
 	if err != nil {
 		return err
 	}
 	return nil
 }
-
 
 // cmdArgs := []string{"curl", "/v2/info"}
 // v2Info, err := execCommand("cf", cmdArgs, false)
@@ -123,9 +123,7 @@ func (c *Copier) doCopy(sourcePath string, targetPath string, passCode string) e
 	fmt.Printf("Copying %s to %s\n", sourcePath, targetPath)
 	c.numInstances
 	// cf:23162dc7-ca4d-4e77-b656-65cd6d16ba66/0
-	clientConfig := &ssh.ClientConfig {
-
-	}
+	clientConfig := &ssh.ClientConfig{}
 	return nil
 }
 
@@ -158,7 +156,6 @@ func isExcluded(path string, excludes []string) (excluded bool, match string) {
 	excluded, match = false, ""
 	return
 }
-
 
 // func NewCodeGenerator1(done <-chan struct{}) PasswordGenerator {
 // 	fmt.Println("**** Obtaining SSH Code...")
